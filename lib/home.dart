@@ -1,22 +1,13 @@
+import 'package:demo/logic_controller.dart';
 import 'package:demo/screen_one.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeScreen extends StatefulWidget {
+
+class HomeScreen extends StatelessWidget {
   
-  const HomeScreen({ Key? key }) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int count=0;
-  increaseCount(){
-    setState(() {
-      count++;
-    });
-    
-  }
+final logicController=Get.put(LogicController());
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,12 +17,19 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ListTile(
                 onTap: (){
-                 Route route=MaterialPageRoute(
-                   builder: (ctx)=>ScreenOne()
-                  );
-                  Navigator.push(context, route);
+                  Get.to(ScreenOne());
+                //  Route route=MaterialPageRoute(
+                //    builder: (ctx)=>ScreenOne()
+                //   );
+                //   Navigator.push(context, route);
                 },
-                leading: Text("Count Number:")
+                leading: Obx(
+                  ()=> Text("Count Number:${logicController.count}",
+                  style: TextStyle(
+                    fontSize: 24
+                  ),),
+                ),
+                
                
                 
               )
@@ -46,13 +44,24 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
              
-              Text("Count Number:$count")
+              Obx(
+                ()=> Text("Count Number:${logicController.count}",
+                 style: TextStyle(
+                    fontSize: 24
+                  ),),
+              ),
+              Obx(
+                  ()=> Text("Count Double Number:${logicController.countDouble}",
+                  style: TextStyle(
+                    fontSize: 24
+                  ),),
+                )
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-           increaseCount();
+           logicController.increaseCount();
           },
           child: Icon(Icons.add),
         ),
