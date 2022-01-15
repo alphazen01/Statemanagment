@@ -1,8 +1,11 @@
+import 'package:demo/logic_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ScreenOne extends StatelessWidget {
-  const ScreenOne({ Key? key }) : super(key: key);
+final logicController=Get.put(LogicController());
 
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,10 +15,22 @@ class ScreenOne extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text("Count Number:"),
-            Text("Count Double Number:"),
+            Obx(
+              ()=> Text("Count Number:${logicController.count}",
+               style: TextStyle(
+                    fontSize: 24
+                  ),),
+            ),
+            Obx(
+              () =>Text("Count Double Number:${logicController.countDouble}",
+               style: TextStyle(
+                    fontSize: 24
+                  ),),
+            ),
             ElevatedButton(
-              onPressed: (){}, 
+              onPressed: (){
+                logicController.increment();
+              }, 
               child: Text("Click")
             )
           ],
