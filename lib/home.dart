@@ -1,13 +1,22 @@
 import 'package:demo/logic_controller.dart';
 import 'package:demo/screen_one.dart';
+import 'package:demo/theme_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 
-class HomeScreen extends StatelessWidget {
-  
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+ final themeController=Get.put(ThemeController());
+
 final logicController=Get.put(LogicController());
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +46,21 @@ final logicController=Get.put(LogicController());
           ),
         ), 
           appBar: AppBar(
+            backgroundColor: Colors.red,
             title: Text("Statemanagment"),
+            actions: [
+             ObxValue(
+               (data)=> Switch(
+                 value: themeController.isDark.value, 
+                 onChanged: (Value){
+                   themeController.isDark.value=Value;
+                   themeController.changeAppTheme(themeController.isDark.value);
+                 },
+                ),
+                false.obs
+             )
+             
+            ],
           ),
        body: Center(
           child: Column(
